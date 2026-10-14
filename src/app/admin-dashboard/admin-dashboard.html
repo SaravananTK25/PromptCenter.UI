@@ -1,0 +1,492 @@
+<app-home-button></app-home-button>
+<div class="admin-page">
+
+  <!-- ============================== -->
+  <!-- HEADER -->
+  <!-- ============================== -->
+
+  <div class="admin-header">
+
+    <div>
+      <h1>Prompt Management</h1>
+
+      <p>
+        Add new prompts or remove existing prompts.
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- ============================== -->
+  <!-- MESSAGES -->
+  <!-- ============================== -->
+
+  <div
+    class="success-message"
+    *ngIf="message">
+
+    {{ message }}
+
+  </div>
+
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- ============================== -->
+  <!-- ADD PROMPT -->
+  <!-- ============================== -->
+
+  <section class="admin-card">
+
+    <h2>Add New Prompt</h2>
+
+
+    <form (ngSubmit)="addPrompt()">
+
+
+      <!-- TITLE + TYPE -->
+
+      <div class="form-row">
+
+
+        <!-- TITLE -->
+
+        <div class="form-group">
+
+          <label for="title">
+            Title
+          </label>
+
+          <input
+            id="title"
+            type="text"
+            name="title"
+            [(ngModel)]="newPrompt.title"
+            placeholder="Enter prompt title"
+            required
+          />
+
+        </div>
+
+
+        <!-- TYPE -->
+
+        <div class="form-group">
+
+          <label for="type">
+            Type
+          </label>
+
+          <select
+            id="type"
+            name="type"
+            [(ngModel)]="newPrompt.type">
+
+            <option value="image">
+              Image
+            </option>
+
+            <option value="video">
+              Video
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- CATEGORY + TAGS -->
+
+      <div class="form-row">
+
+
+        <!-- CATEGORY -->
+
+        <div class="form-group">
+
+          <label for="category">
+            Category
+          </label>
+
+          <input
+            id="category"
+            type="text"
+            name="category"
+            [(ngModel)]="newPrompt.category"
+            placeholder="Example: Portrait"
+            required
+          />
+
+        </div>
+
+
+        <!-- TAGS -->
+
+        <div class="form-group">
+
+          <label for="tags">
+            Tags
+          </label>
+
+          <input
+            id="tags"
+            type="text"
+            name="tags"
+            [(ngModel)]="newPrompt.tags"
+            placeholder="portrait, realistic, cinematic"
+          />
+
+        </div>
+
+      </div>
+
+
+      <!-- DESCRIPTION -->
+
+      <div class="form-group">
+
+        <label for="description">
+          Description
+        </label>
+
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="newPrompt.description"
+          placeholder="Short description of the prompt"
+          rows="3">
+        </textarea>
+
+      </div>
+
+
+      <!-- PROMPT TEXT -->
+
+      <div class="form-group">
+
+        <label for="promptText">
+          Prompt Text
+        </label>
+
+        <textarea
+          id="promptText"
+          name="promptText"
+          [(ngModel)]="newPrompt.promptText"
+          placeholder="Enter the complete image or video prompt"
+          rows="6"
+          required>
+        </textarea>
+
+      </div>
+
+
+      <!-- NEGATIVE PROMPT -->
+
+      <div class="form-group">
+
+        <label for="negativePrompt">
+          Negative Prompt
+        </label>
+
+        <textarea
+          id="negativePrompt"
+          name="negativePrompt"
+          [(ngModel)]="newPrompt.negativePrompt"
+          placeholder="Enter negative prompt"
+          rows="4">
+        </textarea>
+
+      </div>
+
+
+      <!-- IMAGE URL -->
+
+      <div class="form-group">
+
+        <label for="imageUrl">
+          Image URL
+        </label>
+
+        <input
+          id="imageUrl"
+          type="text"
+          name="imageUrl"
+          [(ngModel)]="newPrompt.imageUrl"
+          placeholder="https://example.com/image.jpg"
+        />
+
+      </div>
+
+
+      <!-- ADD BUTTON -->
+
+      <button
+        type="submit"
+        class="add-button">
+
+        + Add Prompt
+
+      </button>
+
+
+    </form>
+
+  </section>
+
+
+  <!-- ============================== -->
+  <!-- EXISTING PROMPTS -->
+  <!-- ============================== -->
+
+  <section class="admin-card">
+
+
+    <!-- SECTION HEADER -->
+
+    <div class="section-header">
+
+      <div>
+
+        <h2>
+          Existing Prompts
+        </h2>
+
+        <p>
+          {{ prompts.length }} prompt(s)
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROMPT LIST -->
+
+    <div class="prompt-list">
+
+
+      <!-- PROMPT ITEM -->
+
+      <div
+        class="prompt-item"
+        *ngFor="let prompt of prompts">
+
+
+        <!-- PROMPT INFORMATION -->
+
+        <div class="prompt-info">
+
+
+          <h3>
+            {{ prompt.title }}
+          </h3>
+
+
+          <div class="prompt-meta">
+
+            <span>
+              {{ prompt.type }}
+            </span>
+
+            <span>
+              {{ prompt.category }}
+            </span>
+
+          </div>
+
+
+          <p *ngIf="prompt.description">
+
+            {{ prompt.description }}
+
+          </p>
+
+
+        </div>
+
+
+        <!-- DELETE BUTTON -->
+
+        <button
+          type="button"
+          class="delete-button"
+          (click)="deletePrompt(prompt.id)">
+
+          Delete
+
+        </button>
+
+
+      </div>
+
+
+      <!-- EMPTY STATE -->
+
+      <div
+        class="empty-state"
+        *ngIf="prompts.length === 0">
+
+        No prompts available.
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- DELETE CONFIRMATION MODAL -->
+<!-- ================================================= -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showDeleteModal">
+
+
+  <div class="delete-modal">
+
+
+    <!-- ICON -->
+
+    <div class="modal-icon delete-icon">
+
+      !
+
+    </div>
+
+
+    <!-- TITLE -->
+
+    <h2>
+      Delete Prompt?
+    </h2>
+
+
+    <!-- MESSAGE -->
+
+    <p>
+
+      Are you sure you want to delete
+
+      <strong>
+        "{{ selectedPromptTitle }}"
+      </strong>
+
+      ?
+
+    </p>
+
+
+    <!-- WARNING -->
+
+    <p class="modal-warning">
+
+      This action cannot be undone.
+
+    </p>
+
+
+    <!-- BUTTONS -->
+
+    <div class="modal-actions">
+
+
+      <!-- CANCEL -->
+
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="cancelDelete()">
+
+        Cancel
+
+      </button>
+
+
+      <!-- CONFIRM DELETE -->
+
+      <button
+        type="button"
+        class="confirm-delete-button"
+        (click)="confirmDelete()">
+
+        Delete
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- DELETE SUCCESS POPUP -->
+<!-- ================================================= -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showSuccessPopup">
+
+
+  <div class="success-modal">
+
+
+    <!-- SUCCESS ICON -->
+
+    <div class="modal-icon success-icon">
+
+      ✓
+
+    </div>
+
+
+    <!-- TITLE -->
+
+    <h2>
+      Prompt Deleted
+    </h2>
+
+
+    <!-- MESSAGE -->
+
+    <p>
+
+      The prompt has been deleted successfully.
+
+    </p>
+
+
+    <!-- DONE -->
+
+    <button
+      type="button"
+      class="primary-button"
+      (click)="closeSuccessPopup()">
+
+      Done
+
+    </button>
+
+
+  </div>
+
+</div>

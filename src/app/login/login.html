@@ -1,0 +1,166 @@
+<div class="auth-page">
+
+  <div class="auth-container">
+
+    <!-- Branding -->
+    <section class="brand-panel">
+
+      <div class="brand-logo">
+        <span class="brand-mark">P</span>
+        <span>PromptCenter</span>
+      </div>
+
+      <div class="brand-content">
+
+        <p class="eyebrow">
+          AI PROMPT WORKSPACE
+        </p>
+
+        <h1>
+          Organize your prompts.
+          <span>Work smarter.</span>
+        </h1>
+
+        <p class="brand-description">
+          Discover, manage and reuse your favorite AI prompts
+          from one simple workspace.
+        </p>
+
+        <div class="benefits">
+
+          <div class="benefit">
+            <span>✓</span>
+            <p>Search and organize prompts</p>
+          </div>
+
+          <div class="benefit">
+            <span>✓</span>
+            <p>Save your favorite prompts</p>
+          </div>
+
+          <div class="benefit">
+            <span>✓</span>
+            <p>Access your workspace anywhere</p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <p class="copyright">
+        © 2026 PromptCenter
+      </p>
+
+    </section>
+
+
+    <!-- Login -->
+    <section class="form-panel">
+
+      <div class="form-container">
+
+        <div class="mobile-logo">
+          <span class="brand-mark">P</span>
+          <span>PromptCenter</span>
+        </div>
+
+        <div class="form-header">
+
+          <h2>Welcome back</h2>
+
+          <p>
+            Sign in to continue to your workspace.
+          </p>
+
+        </div>
+
+        <form (ngSubmit)="login()">
+
+          <div class="form-group"> <label for="email"> Email address </label> <input id="email" type="email"
+              name="email" [(ngModel)]="email" placeholder="you@example.com" autocomplete="email"
+              [class.input-error]="emailError" /> @if (emailError) { <div class="field-error"> {{ emailError }} </div> }
+          </div>
+
+          <div class="form-group"> <label for="password"> Password </label> <input id="password" type="password"
+              name="password" [(ngModel)]="password" placeholder="Enter your password" autocomplete="current-password"
+              [class.input-error]="passwordError" /> 
+              @if (passwordError) { 
+                <div class="field-error"> 
+                  {{ passwordError }}
+            </div> } 
+            <!-- <a routerLink="/forgot-password" class="forgot-password"> Forgot password? </a>  -->
+          </div>
+
+          <button class="primary-button" type="submit">
+            Sign in
+          </button>
+
+        </form>
+
+        @if (loginMessage) {
+
+        <div class="message" [class.success]="loginMessage === 'Login successful!'"
+          [class.error]="loginMessage !== 'Login successful!'">
+
+          {{ loginMessage }}
+
+        </div>
+
+        }
+
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+        <button class="guest-button" type="button" routerLink="/dashboard">
+
+          Continue as guest
+          <span>→</span>
+
+        </button>
+
+        <p class="account-link">
+
+          Don't have an account?
+
+          <a routerLink="/register">
+            Create an account
+          </a>
+
+        </p>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+<!-- Login Error Popup -->
+@if (showErrorPopup) {
+
+<div class="popup-overlay">
+
+  <div class="error-popup">
+
+    <div class="popup-icon">
+      !
+    </div>
+
+    <h3>Login Failed</h3>
+
+    <p>
+      {{ errorPopupMessage }}
+    </p>
+
+    <button type="button" class="popup-button" (click)="closeErrorPopup()">
+
+      OK
+
+    </button>
+
+  </div>
+
+</div>
+
+}

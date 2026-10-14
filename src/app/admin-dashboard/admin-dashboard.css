@@ -1,0 +1,462 @@
+.admin-page {
+min-height: 100vh;
+padding: 32px;
+background: #f5f7fb;
+color: #1f2937;
+}
+
+.admin-header {
+max-width: 1100px;
+margin: 0 auto 24px;
+}
+
+.admin-header h1 {
+margin: 0;
+font-size: 30px;
+font-weight: 700;
+}
+
+.admin-header p {
+margin: 8px 0 0;
+color: #6b7280;
+}
+
+/* Messages */
+
+.success-message,
+.error-message {
+max-width: 1100px;
+margin: 0 auto 16px;
+padding: 12px 16px;
+border-radius: 8px;
+font-size: 14px;
+}
+
+.success-message {
+background: #ecfdf5;
+color: #047857;
+}
+
+.error-message {
+background: #fef2f2;
+color: #dc2626;
+}
+
+/* Cards */
+
+.admin-card {
+max-width: 1100px;
+margin: 0 auto 24px;
+padding: 28px;
+background: #ffffff;
+border-radius: 14px;
+box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.admin-card h2 {
+margin: 0 0 6px;
+font-size: 21px;
+}
+
+.admin-card > h2 + p,
+.section-header p {
+margin: 0 0 22px;
+color: #6b7280;
+font-size: 14px;
+}
+
+/* Form */
+
+.form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+
+.form-group {
+margin-bottom: 18px;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 7px;
+font-size: 14px;
+font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+width: 100%;
+box-sizing: border-box;
+padding: 11px 13px;
+border: 1px solid #d1d5db;
+border-radius: 8px;
+background: #ffffff;
+color: #111827;
+font-family: inherit;
+font-size: 14px;
+outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+border-color: #6366f1;
+}
+
+.form-group textarea {
+resize: vertical;
+}
+
+/* Add button */
+
+.add-button {
+border: none;
+border-radius: 8px;
+padding: 12px 20px;
+background: #4f46e5;
+color: #ffffff;
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+}
+
+.add-button:hover {
+background: #4338ca;
+}
+
+/* Existing prompts */
+
+.section-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+}
+
+.section-header h2 {
+margin: 0;
+}
+
+.section-header p {
+margin: 5px 0 0;
+}
+
+.prompt-list {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.prompt-item {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 20px;
+padding: 16px;
+border: 1px solid #e5e7eb;
+border-radius: 10px;
+}
+
+.prompt-info {
+min-width: 0;
+}
+
+.prompt-info h3 {
+margin: 0 0 7px;
+font-size: 16px;
+}
+
+.prompt-info p {
+margin: 8px 0 0;
+color: #6b7280;
+font-size: 13px;
+}
+
+.prompt-meta {
+display: flex;
+gap: 8px;
+}
+
+.prompt-meta span {
+padding: 4px 9px;
+border-radius: 5px;
+background: #f3f4f6;
+color: #4b5563;
+font-size: 12px;
+}
+
+/* Delete button */
+
+.delete-button {
+flex-shrink: 0;
+padding: 9px 15px;
+border: 1px solid #fecaca;
+border-radius: 7px;
+background: #ffffff;
+color: #dc2626;
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+}
+
+.delete-button:hover {
+background: #fef2f2;
+}
+
+/* Empty state */
+
+.empty-state {
+padding: 30px;
+text-align: center;
+color: #9ca3af;
+border: 1px dashed #d1d5db;
+border-radius: 10px;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+.admin-page {
+padding: 18px;
+}
+
+.admin-card {
+padding: 20px;
+}
+
+.form-row {
+grid-template-columns: 1fr;
+gap: 0;
+}
+
+.prompt-item {
+align-items: flex-start;
+flex-direction: column;
+}
+
+.delete-button {
+width: 100%;
+}
+
+}
+/* =========================
+   MODAL OVERLAY
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(15, 23, 42, 0.55);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+
+  padding: 20px;
+}
+
+
+/* =========================
+   DELETE MODAL
+========================= */
+
+.delete-modal,
+.success-modal {
+  width: 100%;
+  max-width: 420px;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  padding: 32px;
+
+  text-align: center;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+
+  animation: modalAppear 0.2s ease-out;
+}
+
+
+@keyframes modalAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+
+/* =========================
+   MODAL ICON
+========================= */
+
+.modal-icon {
+  width: 60px;
+  height: 60px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+  font-weight: 700;
+}
+
+
+.delete-icon {
+  background: #fff1f2;
+  color: #dc2626;
+}
+
+
+.success-icon {
+  background: #ecfdf5;
+  color: #16a34a;
+}
+
+
+/* =========================
+   MODAL TEXT
+========================= */
+
+.delete-modal h2,
+.success-modal h2 {
+  margin: 0 0 10px;
+
+  font-size: 22px;
+}
+
+
+.delete-modal p,
+.success-modal p {
+  margin: 8px 0;
+
+  color: #64748b;
+
+  line-height: 1.6;
+}
+
+
+.delete-modal strong {
+  color: #1e293b;
+}
+
+
+.modal-warning {
+  font-size: 13px;
+
+  color: #dc2626 !important;
+
+  margin-top: 12px !important;
+}
+
+
+/* =========================
+   MODAL BUTTONS
+========================= */
+
+.modal-actions {
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 26px;
+}
+
+
+.modal-actions button {
+  flex: 1;
+}
+
+
+.cancel-button,
+.confirm-delete-button,
+.primary-button {
+  border: none;
+
+  border-radius: 10px;
+
+  padding: 12px 20px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+.cancel-button {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+
+.cancel-button:hover {
+  background: #e2e8f0;
+}
+
+
+.confirm-delete-button {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+
+.confirm-delete-button:hover {
+  background: #b91c1c;
+}
+
+
+.primary-button {
+  margin-top: 22px;
+
+  background: #4f46e5;
+
+  color: #ffffff;
+
+  min-width: 120px;
+}
+
+
+.primary-button:hover {
+  background: #4338ca;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+  .delete-modal,
+  .success-modal {
+    padding: 25px 20px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+}

@@ -1,0 +1,31 @@
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 14px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.home-button:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #4f46e5;
+}
+
+.home-icon {
+  font-size: 17px;
+  line-height: 1;
+}

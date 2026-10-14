@@ -1,0 +1,461 @@
+<div class="toast-success" *ngIf="showCopySuccess">
+  <div class="toast-icon">✓</div>
+
+  <div class="toast-content">
+    <strong>Copied!</strong>
+    <span>Prompt copied successfully.</span>
+  </div>
+
+  <button type="button" class="toast-close" (click)="showCopySuccess = false">
+    ×
+  </button>
+</div>
+
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="sidebar-brand">
+      <span class="brand-mark">P</span>
+      <span>PromptCenter</span>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <p class="nav-label">WORKSPACE</p>
+
+      <a class="nav-item" [class.active]="!showFavorites" (click)="showDashboard()">
+
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+
+      </a>
+
+      <a class="nav-item">
+
+        <span class="nav-icon">▤</span>
+        <span>Prompts</span>
+
+      </a>
+
+      <a class="nav-item" [class.active]="showFavorites" (click)="showFavoritePrompts()">
+
+        <span class="nav-icon">♡</span>
+        <span>Favorites</span>
+
+      </a>
+      <a *ngIf="authService.isAdmin()" routerLink="/admin-dashboard" routerLinkActive="active" class="nav-item">
+
+        <span>⚙</span>
+        Admin
+
+      </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+      <a class="nav-item" (click)="goToAboutUs()">
+
+        <span class="nav-icon">ⓘ</span>
+        <span>About Us</span>
+
+      </a>
+
+      <button *ngIf="isLoggedIn" type="button" class="logout-button" (click)="logout()">
+
+        <span>↪</span>
+        <span>Logout</span>
+
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <div class="dashboard-main">
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+      <div class="mobile-brand">
+        <span class="brand-mark">P</span>
+        <span>PromptCenter</span>
+      </div>
+
+      <div class="topbar-search">
+
+        <span>⌕</span>
+
+        <input type="text" placeholder="Search prompts..." #searchBox (input)="searchPrompts(searchBox.value)" />
+
+      </div>
+
+      <div class="topbar-user">
+
+        <div class="user-avatar">
+          {{ userInitial }}
+        </div>
+
+        <div class="user-info">
+
+          <strong>
+            {{ userName }}
+          </strong>
+
+          <span>
+            {{ userRole }}
+          </span>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <main class="content">
+
+      <section class="page-header">
+
+        <div>
+
+          <p class="page-eyebrow">
+            PROMPT LIBRARY
+          </p>
+
+          <h1>
+            {{ showFavorites ? 'Your Favorites' : 'Discover AI Prompts' }}
+          </h1>
+
+          <p class="page-description">
+            {{
+            showFavorites
+            ? 'Quickly access the prompts you have saved.'
+            : 'Find, manage and reuse your favorite AI prompts.'
+            }}
+          </p>
+
+        </div>
+
+        <div class="prompt-count">
+
+          <strong>{{ filteredPrompts.length }}</strong>
+
+          <span>
+            {{ filteredPrompts.length === 1 ? 'prompt' : 'prompts' }}
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- CATEGORIES -->
+
+      <div class="category-section">
+
+        <button class="category" [class.active]="selectedCategory === 'All'" (click)="filterByCategory('All')">
+
+          All
+
+        </button>
+
+        <button class="category" [class.active]="selectedCategory === 'Coding'" (click)="filterByCategory('Coding')">
+
+          Coding
+
+        </button>
+
+        <button class="category" [class.active]="selectedCategory === 'Image'" (click)="filterByCategory('Image')">
+
+          Image
+
+        </button>
+
+        <button class="category" [class.active]="selectedCategory === 'Video'" (click)="filterByCategory('Video')">
+
+          Video
+
+        </button>
+
+        <button class="category" [class.active]="selectedCategory === 'Writing'" (click)="filterByCategory('Writing')">
+
+          Writing
+
+        </button>
+
+      </div>
+
+
+      <!-- PROMPTS -->
+
+      @if (filteredPrompts.length > 0) {
+
+      <section class="prompt-grid">
+
+        @for (item of filteredPrompts; track item.id) {
+
+        <article class="prompt-card">
+          <div class="prompt-demo-image" *ngIf="item.imageUrl">
+            <img [src]="item.imageUrl" [alt]="item.title + ' demo image'" loading="lazy"
+              (click)="selectedDemoImageUrl = item.imageUrl" />
+          </div>          
+          <div class="card-top">
+
+            <span class="badge">
+              {{ item.category }}
+            </span>
+
+            <button class="favorite-button" (click)="toggleFavorite(item)" aria-label="Toggle favorite">
+
+              {{ favoritePrompts.includes(item.id) ? '♥' : '♡' }}
+
+            </button>
+
+          </div>
+
+          <h2>
+            {{ item.title }}
+          </h2>
+
+          <p class="prompt-preview">
+            {{ item.promptText }}
+          </p>
+
+          <div class="card-footer">
+
+            <button class="use-button" (click)="selectPrompt(item)">
+
+              View prompt
+              <span>→</span>
+
+            </button>
+
+          </div>
+
+        </article>
+
+        }
+
+      </section>
+
+      }
+      @else {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          ♡
+        </div>
+
+        <h2>
+          No prompts found
+        </h2>
+
+        <p>
+          Try changing your search or category filter.
+        </p>
+
+      </div>
+
+      }
+
+
+      <!-- PROMPT MODAL -->
+
+      @if (selectedPrompt) {
+
+      <div class="modal-overlay">
+
+        <div class="prompt-modal">
+
+          <div class="modal-header">
+
+            <div>
+
+              <span class="badge">
+                {{ selectedPrompt.category }}
+              </span>
+
+              <h2>
+                {{ selectedPrompt.title }}
+              </h2>
+
+            </div>
+
+            <button class="close-button" (click)="closePrompt()">
+
+              ×
+
+            </button>
+
+          </div>
+
+          <div class="prompt-content">
+
+            <h3>Prompt</h3>
+
+            <p>
+              {{ selectedPrompt.promptText }}
+            </p>
+
+            <div *ngIf="selectedPrompt.negativePrompt" class="negative-prompt">
+
+              <h3>Negative Prompt</h3>
+
+              <p>
+                {{ selectedPrompt.negativePrompt }}
+              </p>
+
+            </div>
+
+          </div>
+
+          <button class="copy-button" (click)="copyPrompt()">
+
+            Copy prompt
+            <span>⌘ C</span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+      }
+
+
+      <!-- LOGIN REQUIRED -->
+
+      @if (showLoginRequired) {
+
+      <div class="modal-overlay">
+
+        <div class="login-required-modal">
+
+          <div class="modal-symbol">
+            🔐
+          </div>
+
+          <h2>
+            Login required
+          </h2>
+
+          <p>
+            Please sign in or create an account to save
+            prompts to your favorites.
+          </p>
+
+          <div class="auth-actions">
+
+            <button class="login-action" (click)="goToLogin()">
+
+              Sign in
+
+            </button>
+
+            <button class="register-action" (click)="goToRegister()">
+
+              Create account
+
+            </button>
+
+          </div>
+
+          <button class="cancel-action" (click)="closeLoginRequired()">
+
+            Maybe later
+
+          </button>
+
+        </div>
+
+      </div>
+
+      }
+
+
+      <!-- LOGOUT -->
+
+      <!-- LOGOUT -->
+
+      @if (showLogoutModal && isLoggedIn) {
+
+      <div class="modal-overlay">
+
+        <div class="logout-modal">
+
+          <div class="logout-icon">
+            ↪
+          </div>
+
+          <h2>
+            Logout?
+          </h2>
+
+          <p>
+            Are you sure you want to sign out of
+            PromptCenter?
+          </p>
+
+          <div class="logout-actions">
+
+            <button type="button" class="cancel-logout" (click)="cancelLogout()">
+
+              Cancel
+
+            </button>
+
+            <button type="button" class="confirm-logout" (click)="confirmLogout()">
+
+              <span>↪</span>
+              <span>Logout</span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      }
+
+    </main>
+
+  </div>
+
+</div>
+```html
+<!-- Full-screen demo image viewer -->
+@if (selectedDemoImageUrl) {
+  <div class="image-viewer-overlay"
+       (click)="selectedDemoImageUrl = ''">
+
+    <button
+      type="button"
+      class="image-viewer-close"
+      aria-label="Close full-screen image"
+      (click)="selectedDemoImageUrl = ''; $event.stopPropagation()">
+      ×
+    </button>
+
+    <img
+      class="image-viewer-full-image"
+      [src]="selectedDemoImageUrl"
+      alt="Full-size demo image"
+      (click)="$event.stopPropagation()"
+    />
+  </div>
+}
+```
