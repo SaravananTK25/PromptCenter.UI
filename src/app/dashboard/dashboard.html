@@ -21,7 +21,6 @@
       <span class="brand-mark">P</span>
       <span>PromptCenter</span>
     </div>
-
     <nav class="sidebar-nav">
 
       <p class="nav-label">WORKSPACE</p>
@@ -82,14 +81,16 @@
   <div class="dashboard-main">
 
     <!-- TOP BAR -->
+<header class="topbar">
 
-    <header class="topbar">
+  <div class="mobile-brand">
+    <span class="brand-mark">P</span>
+    <span>PromptCenter</span>
+  </div>
 
-      <div class="mobile-brand">
-        <span class="brand-mark">P</span>
-        <span>PromptCenter</span>
-      </div>
-
+  <!-- <button type="button" class="mobile-dashboard-link" (click)="showDashboard()">
+     
+  </button> -->
       <div class="topbar-search">
 
         <span>⌕</span>
@@ -436,7 +437,6 @@
   </div>
 
 </div>
-```html
 <!-- Full-screen demo image viewer -->
 @if (selectedDemoImageUrl) {
   <div class="image-viewer-overlay"
@@ -458,4 +458,3 @@
     />
   </div>
 }
-```

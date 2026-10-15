@@ -110,9 +110,7 @@ showCopySuccess = false;
   }
 
   showDashboard(): void {
-
     this.showFavorites = false;
-
     this.applyFilters();
   }
 
