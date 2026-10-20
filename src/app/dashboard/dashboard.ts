@@ -7,6 +7,7 @@ import { Prompt } from '../models/prompt.model';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './dashboard.css'
 })
 export class Dashboard implements OnInit {
-showCopySuccess = false;
+  showCopySuccess = false;
   userName = '';
   userRole = '';
   userInitial = '';
@@ -30,6 +31,8 @@ showCopySuccess = false;
   showLoginRequired = false;
   showLogoutModal = false;
   selectedDemoImageUrl: string = '';
+  isPromptsLoading = false;
+  isFavoritesLoading = false;
 
   constructor(
     private promptService: PromptService,
@@ -51,7 +54,7 @@ showCopySuccess = false;
     }
   }
   loadFavorites(): void {
-
+    this.isFavoritesLoading = true;
     this.promptService.getFavorites().subscribe({
 
       next: (favorites: any[]) => {
@@ -64,9 +67,14 @@ showCopySuccess = false;
         this.cdr.detectChanges();
       },
 
-      error: (error) => {    
+      error: (error) => {
+        this.isFavoritesLoading = false;
+        this.cdr.detectChanges();
+      },
+      complete: () => {
+        this.isFavoritesLoading = false;
+        this.cdr.detectChanges();
       }
-
     });
   }
   showFavoritePrompts(): void {
@@ -124,11 +132,11 @@ showCopySuccess = false;
       this.selectedPrompt.promptText
     );
 
-   this.showCopySuccess = true;
+    this.showCopySuccess = true;
 
-setTimeout(() => {
-  this.showCopySuccess = false;
-}, 2500);
+    setTimeout(() => {
+      this.showCopySuccess = false;
+    }, 2500);
   }
 
   toggleFavorite(prompt: Prompt): void {
@@ -156,7 +164,7 @@ setTimeout(() => {
           },
 
           error: (error) => {
-           
+
           }
 
         });
@@ -173,7 +181,7 @@ setTimeout(() => {
             this.applyFilters();
           },
 
-          error: (error) => {          
+          error: (error) => {
           }
 
         });
@@ -213,6 +221,7 @@ setTimeout(() => {
   }
 
   loadPrompts(): void {
+    this.isPromptsLoading = true;
 
     this.promptService.getPrompts().subscribe({
 
@@ -225,7 +234,13 @@ setTimeout(() => {
         this.cdr.detectChanges();
       },
 
-      error: (error) => {        
+      error: (error) => {
+        this.isPromptsLoading = false;
+        this.cdr.detectChanges();
+      },
+      complete: () => {
+        this.isPromptsLoading = false;
+        this.cdr.detectChanges();
       }
 
     });
