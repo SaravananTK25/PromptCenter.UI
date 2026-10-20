@@ -53,7 +53,6 @@
 
     </section>
 
-
     <!-- Login -->
     <section class="form-panel">
 
@@ -83,16 +82,23 @@
 
           <div class="form-group"> <label for="password"> Password </label> <input id="password" type="password"
               name="password" [(ngModel)]="password" placeholder="Enter your password" autocomplete="current-password"
-              [class.input-error]="passwordError" /> 
-              @if (passwordError) { 
-                <div class="field-error"> 
-                  {{ passwordError }}
-            </div> } 
+              [class.input-error]="passwordError" />
+            @if (passwordError) {
+            <div class="field-error">
+              {{ passwordError }}
+            </div> }
             <!-- <a routerLink="/forgot-password" class="forgot-password"> Forgot password? </a>  -->
           </div>
 
-          <button class="primary-button" type="submit">
-            Sign in
+          <button class="primary-button" type="submit" [disabled]="isPromptsLoading">
+
+            @if (isPromptsLoading) {
+            <span class="button-spinner"></span>
+            <span>Signing in...</span>
+            } @else {
+            <span>Sign in</span>
+            }
+
           </button>
 
         </form>
@@ -112,7 +118,7 @@
           <span>OR</span>
         </div>
 
-        <button class="guest-button" type="button" routerLink="/dashboard">
+        <button class="guest-button" type="button" routerLink="/dashboard" [disabled]="isPromptsLoading">
 
           Continue as guest
           <span>→</span>

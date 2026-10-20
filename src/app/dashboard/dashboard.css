@@ -1029,3 +1029,148 @@
     transform: rotate(360deg);
   }
 }
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.topbar-logout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.topbar-logout-button:hover {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+@media (max-width: 600px) {
+  .topbar-user {
+    gap: 8px;
+  }
+
+  .topbar-logout-button {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .topbar-logout-button span:last-child {
+    display: none;
+  }
+}
+
+/* Mobile navigation: hidden on desktop */
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex;
+    align-items: stretch;
+    gap: 6px;
+    padding: 10px 12px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 68px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    color: #64748b;
+    font-size: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .mobile-nav-item > span:first-child {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .mobile-nav-item.active {
+    background: #eef2ff;
+    color: #4f46e5;
+    font-weight: 600;
+  }
+
+  .mobile-nav-item:active {
+    background: #e0e7ff;
+  }
+
+  /* Keep the top bar usable on narrow screens */
+  .topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .topbar-user {
+    margin-left: auto;
+    gap: 8px;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .topbar-logout-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  .topbar-search {
+    order: 3;
+    flex: 1 0 100%;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .topbar-search input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .content {
+    padding: 20px 14px;
+  }
+
+  .prompt-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

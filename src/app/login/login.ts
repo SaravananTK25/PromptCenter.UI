@@ -24,6 +24,7 @@ export class Login {
   loginMessage = '';
   showErrorPopup = false;
   errorPopupMessage = '';
+  isPromptsLoading = false;
 
   constructor(
     private authService: AuthService,
@@ -32,26 +33,26 @@ export class Login {
   ) { }
 
   login(): void {
-    // Clear previous validation messages 
     this.emailError = '';
-    this.passwordError = '';
-    // Close previous popup
+    this.passwordError = '';    
     this.showErrorPopup = false;
     this.loginMessage = '';
-    // Validate email
+    
     if (!this.email.trim()) {
       this.emailError = 'Email is required.';
     }
 
-    // Validate password 
+    
     if (!this.password.trim()) {
       this.passwordError = 'Password is required.';
     }
 
-    // Stop here if validation failed 
+    
     if (this.emailError || this.passwordError) {
       return;
     }
+
+    this.isPromptsLoading = true;
 
     this.authService.login(
       this.email,
@@ -63,6 +64,7 @@ export class Login {
         this.authService.saveLoginData(response);
 
         this.loginMessage = 'Login successful!';
+        this.isPromptsLoading = false;
 
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
@@ -70,17 +72,15 @@ export class Login {
       },
 
       error: (error) => {
-      
-
+        this.isPromptsLoading = false;
         this.errorPopupMessage =
           'Incorrect email or password. Please try again.';
-
-        this.showErrorPopup = true;        
-
+        this.showErrorPopup = true;
+        this.isPromptsLoading = false;
         // Force Angular to update the UI
-        this.cdr.detectChanges();        
+        this.cdr.detectChanges();
       }
-    });
+    });     
   }
 
   closeErrorPopup(): void {

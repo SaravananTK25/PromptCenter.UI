@@ -106,21 +106,46 @@
         </div>
 
         <div class="user-info">
-
-          <strong>
-            {{ userName }}
-          </strong>
-
-          <span>
-            {{ userRole }}
-          </span>
-
+          <strong>{{ userName }}</strong>
+          <span>{{ userRole }}</span>
         </div>
+
+        <button *ngIf="isLoggedIn" type="button" class="topbar-logout-button" (click)="logout()">
+
+          <span>↪</span>
+          <span>Logout</span>
+
+        </button>
 
       </div>
 
     </header>
 
+
+    <!-- MOBILE NAVIGATION -->
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+
+      <a class="mobile-nav-item" [class.active]="!showFavorites" (click)="showDashboard()">
+        <span>⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="mobile-nav-item" [class.active]="showFavorites" (click)="showFavoritePrompts()">
+        <span>♡</span>
+        <span>Favorites</span>
+      </a>
+
+      <a class="mobile-nav-item" (click)="goToAboutUs()">
+        <span>ⓘ</span>
+        <span>About Us</span>
+      </a>
+
+      <a *ngIf="authService.isAdmin()" class="mobile-nav-item" routerLink="/admin-dashboard">
+        <span>⚙</span>
+        <span>Admin</span>
+      </a>
+
+    </nav>
 
     <!-- CONTENT -->
 
